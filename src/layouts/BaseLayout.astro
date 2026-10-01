@@ -59,7 +59,7 @@ const schemaData = {
   {LANGUAGES.map(l => (
     <link rel="alternate" hreflang={l.code} href={siteUrl ? `${siteUrl}${getLangUrl(l.code)}` : getLangUrl(l.code)} />
   ))}
-  <link rel="alternate" hreflang="x-default" href={siteUrl ? `${siteUrl}/en/` : '/en/'} />
+  <link rel="alternate" hreflang="x-default" href={siteUrl ? `${siteUrl}${import.meta.env.BASE_URL}/en/` : `${import.meta.env.BASE_URL}/en/`} />
 
   <meta property="og:type" content="website" />
   <meta property="og:title" content={title} />

@@ -25,8 +25,9 @@ astroFiles.forEach((file) => {
   let content = fs.readFileSync(file, 'utf8');
   let original = content;
   
-  // Replace `/${lang}/` with `${import.meta.env.BASE_URL}${lang}/`
-  content = content.replace(/href=\{`\/\$\{lang\}/g, "href={`\\${import.meta.env.BASE_URL}${lang}");
+  // Replace missing slash after BASE_URL
+  content = content.replace(/\$\{import\.meta\.env\.BASE_URL\}\$\{lang\}/g, "${import.meta.env.BASE_URL}/${lang}");
+  content = content.replace(/\$\{import\.meta\.env\.BASE_URL\}\$\{l\.code\}/g, "${import.meta.env.BASE_URL}/${l.code}");
   
   if (content !== original) {
     fs.writeFileSync(file, content, 'utf8');
