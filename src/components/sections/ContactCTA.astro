@@ -1,0 +1,125 @@
+---
+import Icon from '../common/Icon.astro';
+import Button from '../common/Button.astro';
+import { BUSINESS_INFO, getWhatsAppLink } from '../../utils/constants';
+
+interface Props {
+  t: Record<string, string>;
+}
+
+const { t } = Astro.props;
+---
+
+<section id="contact" class="contact-cta-section">
+  <div class="container">
+    <div class="cta-card text-center">
+      <div class="cta-bg-shape"></div>
+      
+      <div class="cta-content">
+        <span class="eyebrow eyebrow-light">{t['contact.eyebrow']}</span>
+        <h2 class="heading-2 text-white">{t['contact.title']}</h2>
+        <p class="section-desc text-white-muted">{t['contact.desc']}</p>
+        
+        <div class="cta-actions">
+          <Button href={BUSINESS_INFO.phoneLink} variant="accent" className="large-btn call-btn">
+            <Icon name="phone" size={24} />
+            {t['cta.call_now']}
+          </Button>
+          <Button href={getWhatsAppLink()} variant="outline" className="large-btn wa-outline-btn">
+            <Icon name="whatsapp" size={24} />
+            {t['cta.whatsapp']}
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-cta-section {
+    padding: var(--spacing-xxl) 0;
+    background-color: var(--color-white);
+  }
+  
+  .cta-card {
+    background-color: var(--color-primary);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xxl) var(--spacing-lg);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .cta-bg-shape {
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, rgba(11, 31, 58, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  .cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .eyebrow-light {
+    color: var(--color-accent);
+    background-color: rgba(255, 193, 7, 0.1);
+  }
+  
+  .text-white {
+    color: var(--color-white);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .text-white-muted {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .cta-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    justify-content: center;
+  }
+  
+  .large-btn {
+    padding: 16px 32px;
+    font-size: var(--font-size-md);
+    justify-content: center;
+  }
+  
+  .call-btn {
+    color: var(--color-primary);
+  }
+  
+  .wa-outline-btn {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: var(--color-white);
+  }
+  
+  .wa-outline-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--color-white);
+    color: var(--color-white);
+  }
+  
+  @media (min-width: 640px) {
+    .cta-actions {
+      flex-direction: row;
+    }
+    
+    .cta-card {
+      padding: 80px 40px;
+    }
+  }
+</style>

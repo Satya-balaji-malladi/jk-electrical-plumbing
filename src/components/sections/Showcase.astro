@@ -1,0 +1,352 @@
+---
+import Icon from '../common/Icon.astro';
+import Button from '../common/Button.astro';
+import { BUSINESS_INFO, getWhatsAppLink } from '../../utils/constants';
+
+interface Props {
+  t: Record<string, string>;
+}
+
+const { t } = Astro.props;
+
+// Use SVG placeholders for missing photos as required
+const items = [
+  {
+    category: 'electrical',
+    catLabel: t['showcase.cat_electrical'],
+    title: t['srv.elec.house_wiring'],
+    icon: 'plug'
+  },
+  {
+    category: 'electrical',
+    catLabel: t['showcase.cat_electrical'],
+    title: t['srv.elec.light_inst'],
+    icon: 'light'
+  },
+  {
+    category: 'electrical',
+    catLabel: t['showcase.cat_electrical'],
+    title: t['srv.elec.fan_inst'],
+    icon: 'fan'
+  },
+  {
+    category: 'electrical',
+    catLabel: t['showcase.cat_electrical'],
+    title: t['srv.elec.repairs'],
+    icon: 'electrical'
+  },
+  {
+    category: 'electrical',
+    catLabel: t['showcase.cat_electrical'],
+    title: t['srv.elec.mcb_inst'],
+    icon: 'shield'
+  },
+  {
+    category: 'electrical',
+    catLabel: t['showcase.cat_electrical'],
+    title: t['srv.elec.inverter_inst'],
+    icon: 'plug'
+  },
+  {
+    category: 'plumbing',
+    catLabel: t['showcase.cat_plumbing'],
+    title: t['srv.plumb.tap_repair'],
+    icon: 'tap'
+  },
+  {
+    category: 'plumbing',
+    catLabel: t['showcase.cat_plumbing'],
+    title: t['srv.plumb.shower_inst'],
+    icon: 'shower'
+  },
+  {
+    category: 'plumbing',
+    catLabel: t['showcase.cat_plumbing'],
+    title: t['srv.plumb.sink_inst'],
+    icon: 'sink'
+  },
+  {
+    category: 'plumbing',
+    catLabel: t['showcase.cat_plumbing'],
+    title: t['srv.plumb.pipe_leak'],
+    icon: 'pipe'
+  },
+  {
+    category: 'plumbing',
+    catLabel: t['showcase.cat_plumbing'],
+    title: t['srv.plumb.bathroom'],
+    icon: 'toilet'
+  },
+  {
+    category: 'plumbing',
+    catLabel: t['showcase.cat_plumbing'],
+    title: t['srv.plumb.drainage'],
+    icon: 'pipe'
+  }
+];
+---
+
+<section id="showcase" class="showcase-section">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="eyebrow">{t['showcase.eyebrow']}</span>
+      <h2 class="heading-2">{t['showcase.title']}</h2>
+      <p class="section-desc">{t['showcase.desc']}</p>
+      <p class="disclaimer-note">{t['showcase.note']}</p>
+    </div>
+
+    <div class="filter-controls">
+      <button class="filter-btn active" data-filter="all">{t['showcase.filter_all']}</button>
+      <button class="filter-btn" data-filter="electrical">{t['showcase.filter_electrical']}</button>
+      <button class="filter-btn" data-filter="plumbing">{t['showcase.filter_plumbing']}</button>
+    </div>
+
+    <div class="showcase-grid" id="showcase-gallery">
+      {items.map((item) => (
+        <div class={`showcase-card ${item.category}-card`} data-category={item.category}>
+          <div class={`placeholder-image ${item.category}-placeholder`}>
+            <Icon name={item.icon as any} size={64} className="placeholder-icon" />
+          </div>
+          <div class="card-content">
+            <span class="card-category">{item.catLabel}</span>
+            <h3 class="card-title">{item.title}</h3>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="showcase-cta text-center">
+      <h3 class="heading-3">{t['showcase.cta_title']}</h3>
+      <p>{t['showcase.cta_desc']}</p>
+      
+      <div class="cta-actions">
+        <Button href={BUSINESS_INFO.phoneLink} variant="primary">
+          <Icon name="phone" size={20} />
+          {t['cta.call_now']}
+        </Button>
+        <Button href={getWhatsAppLink()} variant="accent" className="wa-btn">
+          <Icon name="whatsapp" size={20} />
+          {t['cta.whatsapp']}
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Simple Client-side Filtering
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.showcase-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active class
+        filterBtns.forEach(b => b.classList.remove('active'));
+        // Add active to current
+        btn.classList.add('active');
+
+        const filterValue = btn.getAttribute('data-filter');
+
+        cards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          if (filterValue === 'all' || filterValue === category) {
+            (card as HTMLElement).style.display = 'flex';
+          } else {
+            (card as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>
+
+<style>
+  .showcase-section {
+    padding: var(--spacing-xxl) 0;
+    background-color: var(--color-white);
+  }
+  
+  .section-header {
+    margin-bottom: var(--spacing-xl);
+    max-width: 800px;
+    margin-inline: auto;
+  }
+  
+  .section-desc {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-light);
+    margin-top: var(--spacing-sm);
+  }
+  
+  .disclaimer-note {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    font-style: italic;
+    margin-top: var(--spacing-sm);
+    opacity: 0.8;
+  }
+  
+  .filter-controls {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+    flex-wrap: wrap;
+  }
+  
+  .filter-btn {
+    padding: 8px 20px;
+    background-color: var(--color-background-alt);
+    border: 2px solid transparent;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    color: var(--color-text-main);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+  
+  .filter-btn:hover {
+    background-color: var(--color-background);
+  }
+  
+  .filter-btn.active {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+  }
+  
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xxl);
+  }
+  
+  @media (min-width: 768px) {
+    .showcase-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .showcase-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .showcase-card {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  
+  .showcase-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .placeholder-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-background-alt);
+  }
+  
+  .placeholder-icon {
+    opacity: 0.8;
+  }
+  
+  /* Category specific visual differences */
+  .electrical-placeholder {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 193, 7, 0.2));
+  }
+  
+  .electrical-placeholder .placeholder-icon {
+    color: var(--color-accent);
+  }
+  
+  .electrical-card .card-category {
+    color: #b38700;
+  }
+  
+  .plumbing-placeholder {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(14, 165, 233, 0.2));
+  }
+  
+  .plumbing-placeholder .placeholder-icon {
+    color: var(--color-primary-light);
+  }
+  
+  .plumbing-card .card-category {
+    color: var(--color-primary-light);
+  }
+  
+  .card-content {
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--color-background-alt);
+  }
+  
+  .card-category {
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 4px;
+  }
+  
+  .card-title {
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    color: var(--color-text-main);
+    margin: 0;
+  }
+  
+  /* CTA */
+  .showcase-cta {
+    background-color: var(--color-background-alt);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .showcase-cta h3 {
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .showcase-cta p {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .cta-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    justify-content: center;
+  }
+  
+  .wa-btn {
+    background-color: #25D366;
+    color: var(--color-white);
+  }
+  
+  .wa-btn:hover {
+    background-color: #128C7E;
+    color: var(--color-white);
+  }
+  
+  @media (min-width: 640px) {
+    .cta-actions {
+      flex-direction: row;
+    }
+  }
+</style>

@@ -1,0 +1,42 @@
+export const electricalServices = [
+  { id: 'srv.elec.house_wiring', featured: true, icon: 'tools' },
+  { id: 'srv.elec.new_wiring', featured: false },
+  { id: 'srv.elec.repairs', featured: true, icon: 'tools' },
+  { id: 'srv.elec.light_inst', featured: true, icon: 'light' },
+  { id: 'srv.elec.led_inst', featured: false },
+  { id: 'srv.elec.fan_inst', featured: true, icon: 'fan' },
+  { id: 'srv.elec.fan_repair', featured: false },
+  { id: 'srv.elec.switch_repair', featured: true, icon: 'plug' },
+  { id: 'srv.elec.switchboard_inst', featured: false },
+  { id: 'srv.elec.mcb_inst', featured: true, icon: 'shield' },
+  { id: 'srv.elec.short_circuit', featured: true, icon: 'tools' },
+  { id: 'srv.elec.tube_repair', featured: false },
+  { id: 'srv.elec.inverter_inst', featured: true, icon: 'plug' },
+  { id: 'srv.elec.inverter_wiring', featured: false },
+  { id: 'srv.elec.appliance_conn', featured: false },
+  { id: 'srv.elec.complete_house', featured: false },
+  { id: 'srv.elec.commercial', featured: false },
+  { id: 'srv.elec.fault_finding', featured: false },
+  { id: 'srv.elec.meter_wiring', featured: false },
+  { id: 'srv.elec.maintenance', featured: false }
+];
+
+export const plumbingServices = [
+  { id: 'srv.plumb.tap_repair', featured: true, icon: 'tap' },
+  { id: 'srv.plumb.shower_inst', featured: true, icon: 'shower' },
+  { id: 'srv.plumb.toilet_repair', featured: true, icon: 'toilet' },
+  { id: 'srv.plumb.toilet_inst', featured: false },
+  { id: 'srv.plumb.sink_inst', featured: true, icon: 'sink' },
+  { id: 'srv.plumb.sink_repair', featured: false },
+  { id: 'srv.plumb.water_leak', featured: true, icon: 'pipe' },
+  { id: 'srv.plumb.pipe_leak', featured: true, icon: 'pipe' },
+  { id: 'srv.plumb.pipe_inst', featured: false },
+  { id: 'srv.plumb.pipe_replace', featured: false },
+  { id: 'srv.plumb.bathroom', featured: true, icon: 'shower' },
+  { id: 'srv.plumb.complete_house', featured: false },
+  { id: 'srv.plumb.commercial', featured: false },
+  { id: 'srv.plumb.water_tank', featured: false },
+  { id: 'srv.plumb.water_supply', featured: false },
+  { id: 'srv.plumb.drainage', featured: true, icon: 'pipe' },
+  { id: 'srv.plumb.maintenance', featured: false }
+];

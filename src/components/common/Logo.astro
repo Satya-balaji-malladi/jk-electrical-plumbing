@@ -1,0 +1,20 @@
+---
+interface Props {
+  width?: number;
+  height?: number;
+  className?: string;
+}
+
+const { width = 40, height = 40, className = '' } = Astro.props;
+---
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width={width} height={height} class={`jk-logo ${className}`} aria-label="JK Electrical & Plumbing Services Logo" role="img">
+  <path class="j-mark" d="M40 20 H55 V60 Q55 80 40 80 H25 V65 H35 Q40 65 40 55 Z" fill="var(--color-plumb, #0EA5E9)"/>
+  <path class="k-mark" d="M60 20 H75 V45 L95 20 H100 L75 50 L100 80 H80 L60 55 V80 H45 V20 Z" fill="var(--color-elec, #FFC107)"/>
+</svg>
+
+<style>
+  .jk-logo {
+    display: inline-block;
+    vertical-align: middle;
+  }
+</style>

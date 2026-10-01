@@ -1,0 +1,278 @@
+---
+import Logo from '../common/Logo.astro';
+import Icon from '../common/Icon.astro';
+import Button from '../common/Button.astro';
+import { BUSINESS_INFO, LANGUAGES, getWhatsAppLink } from '../../utils/constants';
+
+interface Props {
+  lang: string;
+  t: Record<string, string>;
+}
+
+const { lang, t } = Astro.props;
+---
+<header class="navbar">
+  <div class="container navbar-container">
+    <a href={`/${lang}/`} class="logo-link" aria-label={t['site.name']}>
+      <Logo width={48} height={48} />
+      <span class="logo-text">JK</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <ul role="list" class="nav-list">
+        <li><a href={`/${lang}/`} class="nav-link">{t['nav.home']}</a></li>
+        <li><a href={`/${lang}/#services`} class="nav-link">{t['nav.services']}</a></li>
+        <li><a href={`/${lang}/#why-jk`} class="nav-link">{t['nav.why_jk']}</a></li>
+        <li><a href={`/${lang}/#service-area`} class="nav-link">{t['nav.service_area']}</a></li>
+        <li><a href={`/${lang}/#faq`} class="nav-link">{t['nav.faq']}</a></li>
+      </ul>
+    </nav>
+
+    <div class="navbar-actions">
+      <div class="lang-selector desktop-lang">
+        <Icon name="chevron" size={16} />
+        <select aria-label={t['lang.selector']} onchange="window.location.href=this.value">
+          {LANGUAGES.map(l => (
+            <option value={`/${l.code}/`} selected={lang === l.code}>{l.label}</option>
+          ))}
+        </select>
+      </div>
+
+      <Button href={BUSINESS_INFO.phoneLink} variant="primary" className="desktop-call-btn">
+        <Icon name="phone" size={18} />
+        {t['cta.call_now']}
+      </Button>
+
+      <button class="mobile-menu-btn" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+        <Icon name="menu" size={28} />
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="mobile-menu-overlay" aria-hidden="true">
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+      <ul role="list">
+        <li><a href={`/${lang}/`}>{t['nav.home']}</a></li>
+        <li><a href={`/${lang}/#services`}>{t['nav.services']}</a></li>
+        <li><a href={`/${lang}/#why-jk`}>{t['nav.why_jk']}</a></li>
+        <li><a href={`/${lang}/#service-area`}>{t['nav.service_area']}</a></li>
+        <li><a href={`/${lang}/#faq`}>{t['nav.faq']}</a></li>
+      </ul>
+      
+      <div class="mobile-menu-extras">
+        <div class="lang-selector mobile-lang">
+          <Icon name="chevron" size={16} />
+          <select aria-label={t['lang.selector']} onchange="window.location.href=this.value">
+            {LANGUAGES.map(l => (
+              <option value={`/${l.code}/`} selected={lang === l.code}>{l.label}</option>
+            ))}
+          </select>
+        </div>
+        
+        <div class="mobile-menu-actions">
+          <Button href={BUSINESS_INFO.phoneLink} variant="primary" className="mobile-action-btn">
+            <Icon name="phone" size={18} />
+            {t['cta.call_now']}
+          </Button>
+          <Button href={getWhatsAppLink()} variant="accent" className="mobile-action-btn wa-btn-menu">
+            <Icon name="whatsapp" size={18} />
+            {t['cta.whatsapp']}
+          </Button>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .navbar {
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-sm);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 72px;
+  }
+  
+  .logo-link {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+  
+  .logo-text {
+    font-size: var(--font-size-lg);
+    font-weight: 800;
+    color: var(--color-primary);
+  }
+  
+  .desktop-nav {
+    display: none;
+  }
+  
+  .nav-list {
+    display: flex;
+    gap: var(--spacing-lg);
+  }
+  
+  .nav-link {
+    font-weight: 500;
+    color: var(--color-text-main);
+    transition: color var(--transition-fast);
+  }
+  
+  .nav-link:hover {
+    color: var(--color-primary);
+  }
+  
+  .navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+  
+  .lang-selector {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .lang-selector select {
+    appearance: none;
+    background: transparent;
+    border: 1px solid #ccc;
+    border-radius: var(--radius-sm);
+    padding: 0.25rem 1.5rem 0.25rem 0.5rem;
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .lang-selector :global(.icon-chevron) {
+    position: absolute;
+    right: 0.5rem;
+    pointer-events: none;
+  }
+  
+  .desktop-lang {
+    display: none;
+  }
+  
+  .desktop-call-btn {
+    display: none;
+  }
+  
+  .mobile-menu-btn {
+    display: flex;
+    color: var(--color-primary);
+    padding: var(--spacing-xs);
+  }
+  
+  .mobile-menu-overlay {
+    display: none;
+    background-color: var(--color-white);
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #eee;
+    box-shadow: var(--shadow-md);
+    max-height: calc(100vh - 72px);
+    overflow-y: auto;
+  }
+  
+  .mobile-menu-overlay[aria-hidden="false"] {
+    display: block;
+  }
+  
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .mobile-nav ul {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+    margin: 0;
+  }
+  
+  .mobile-nav a {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+  }
+  
+  .mobile-menu-extras {
+    padding: 0 var(--spacing-md) var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    border-top: 1px solid #eee;
+    margin-top: var(--spacing-sm);
+    padding-top: var(--spacing-md);
+  }
+  
+  .mobile-menu-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .mobile-action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .wa-btn-menu {
+    background-color: #25D366;
+    color: var(--color-white);
+  }
+  
+  .wa-btn-menu:hover {
+    opacity: 0.9;
+    color: var(--color-white);
+  }
+  
+  @media (min-width: 768px) {
+    .desktop-nav {
+      display: block;
+    }
+    
+    .desktop-lang {
+      display: flex;
+    }
+    
+    .desktop-call-btn {
+      display: inline-flex;
+    }
+    
+    .mobile-menu-btn {
+      display: none;
+    }
+    
+    .mobile-menu-overlay {
+      display: none !important;
+    }
+  }
+</style>
+
+<script>
+  const btn = document.querySelector('.mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  
+  if (btn && menu) {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!expanded));
+      menu.setAttribute('aria-hidden', String(expanded));
+    });
+  }
+</script>
+

@@ -1,0 +1,89 @@
+---
+import Navbar from '../components/layout/Navbar.astro';
+import Footer from '../components/layout/Footer.astro';
+import MobileActionBar from '../components/layout/MobileActionBar.astro';
+import { BUSINESS_INFO, LANGUAGES } from '../utils/constants';
+import '../styles/global.css';
+
+interface Props {
+  lang: string;
+  t: Record<string, string>;
+  title?: string;
+  description?: string;
+}
+
+const { lang, t, title = t['meta.title'] || t['site.name'], description = t['meta.desc'] || `${BUSINESS_INFO.name} - Professional electrical and plumbing services in ${BUSINESS_INFO.location}. 24/7 Emergency available.` } = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : '';
+const canonicalUrl = siteUrl ? `${siteUrl}${currentPath}` : currentPath;
+
+// Generate hreflang URLs
+const getLangUrl = (targetLang: string) => {
+  return currentPath.replace(`/${lang}/`, `/${targetLang}/`);
+};
+
+// LocalBusiness Schema
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": BUSINESS_INFO.name,
+  "telephone": BUSINESS_INFO.phone,
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Ravulapalem",
+    "addressRegion": "Andhra Pradesh",
+    "addressCountry": "IN"
+  },
+  "areaServed": {
+    "@type": "GeoCircle",
+    "geoMidpoint": {
+      "@type": "GeoCoordinates",
+      "address": "Ravulapalem, Andhra Pradesh"
+    },
+    "geoRadius": "50000"
+  },
+  "url": siteUrl || undefined
+};
+---
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  
+  <link rel="canonical" href={canonicalUrl} />
+  
+  {LANGUAGES.map(l => (
+    <link rel="alternate" hreflang={l.code} href={siteUrl ? `${siteUrl}${getLangUrl(l.code)}` : getLangUrl(l.code)} />
+  ))}
+  <link rel="alternate" hreflang="x-default" href={siteUrl ? `${siteUrl}/en/` : '/en/'} />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:locale" content={lang} />
+  
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+</head>
+<body>
+  <Navbar lang={lang} t={t} />
+  
+  <main>
+    <slot />
+  </main>
+  
+  <Footer lang={lang} t={t} />
+  <MobileActionBar t={t} />
+</body>
+</html>

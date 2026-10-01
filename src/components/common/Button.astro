@@ -1,0 +1,74 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'accent' | 'emergency';
+  className?: string;
+  type?: 'button' | 'submit' | 'reset';
+  'aria-label'?: string;
+}
+
+const { href, variant = 'primary', className = '', type = 'button', 'aria-label': ariaLabel } = Astro.props;
+
+const Element = href ? 'a' : 'button';
+---
+<Element 
+  href={href} 
+  type={href ? undefined : type}
+  class={`btn btn-${variant} ${className}`}
+  aria-label={ariaLabel}
+>
+  <slot />
+</Element>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: var(--font-size-base);
+    text-align: center;
+    transition: all var(--transition-fast);
+    line-height: 1;
+  }
+  
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--color-text-main);
+  }
+  
+  .btn-secondary {
+    background-color: var(--color-white);
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+  }
+  
+  .btn-secondary:hover {
+    background-color: var(--color-bg-light);
+  }
+
+  .btn-accent {
+    background-color: var(--color-elec);
+    color: var(--color-text-main);
+  }
+  
+  .btn-accent:hover {
+    opacity: 0.9;
+  }
+
+  .btn-emergency {
+    background-color: var(--color-emergency);
+    color: var(--color-white);
+  }
+  
+  .btn-emergency:hover {
+    opacity: 0.9;
+  }
+</style>

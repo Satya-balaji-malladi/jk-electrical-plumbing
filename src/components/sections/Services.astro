@@ -1,0 +1,378 @@
+---
+import ServiceCard from '../common/ServiceCard.astro';
+import Button from '../common/Button.astro';
+import Icon from '../common/Icon.astro';
+import { electricalServices, plumbingServices } from '../../data/services';
+import { BUSINESS_INFO, getWhatsAppLink } from '../../utils/constants';
+
+interface Props {
+  t: Record<string, string>;
+}
+
+const { t } = Astro.props;
+
+const featuredElectrical = electricalServices.filter(s => s.featured);
+const otherElectrical = electricalServices.filter(s => !s.featured);
+
+const featuredPlumbing = plumbingServices.filter(s => s.featured);
+const otherPlumbing = plumbingServices.filter(s => !s.featured);
+---
+<section id="services" class="services-section">
+  <div class="container">
+    <div class="section-header">
+      <p class="section-eyebrow">{t['services.eyebrow']}</p>
+      <h2 class="section-title">{t['services.title']}</h2>
+      <p class="section-desc">{t['services.desc']}</p>
+    </div>
+
+    <!-- ELECTRICAL SERVICES -->
+    <div class="service-category">
+      <h3 class="category-title elec-title">{t['services.elec_title']}</h3>
+      
+      <div class="services-grid featured-grid">
+        {featuredElectrical.map(service => (
+          <ServiceCard 
+            title={t[service.id]} 
+            desc={t[`${service.id}.desc`]} 
+            icon={service.icon} 
+            image={service.image}
+            featured={true} 
+            category="electrical" 
+          />
+        ))}
+      </div>
+
+      <div class="expandable-wrapper" id="elec-expandable">
+        <div class="services-grid standard-grid">
+          {otherElectrical.map(service => (
+            <ServiceCard 
+              title={t[service.id]} 
+              category="electrical" 
+            />
+          ))}
+        </div>
+      </div>
+
+      <div class="view-all-container">
+        <button class="view-all-btn" aria-expanded="false" aria-controls="elec-expandable" data-show-text={t['services.view_all_elec']} data-hide-text={t['services.hide_elec']}>
+          <span class="btn-text">{t['services.view_all_elec']}</span>
+          <Icon name="chevron" size={20} className="expand-icon" />
+        </button>
+      </div>
+    </div>
+
+    <hr class="category-divider" />
+
+    <!-- PLUMBING SERVICES -->
+    <div class="service-category">
+      <h3 class="category-title plumb-title">{t['services.plumb_title']}</h3>
+      
+      <div class="services-grid featured-grid">
+        {featuredPlumbing.map(service => (
+          <ServiceCard 
+            title={t[service.id]} 
+            desc={t[`${service.id}.desc`]} 
+            icon={service.icon} 
+            image={service.image}
+            featured={true} 
+            category="plumbing" 
+          />
+        ))}
+      </div>
+
+      <div class="expandable-wrapper" id="plumb-expandable">
+        <div class="services-grid standard-grid">
+          {otherPlumbing.map(service => (
+            <ServiceCard 
+              title={t[service.id]} 
+              category="plumbing" 
+            />
+          ))}
+        </div>
+      </div>
+
+      <div class="view-all-container">
+        <button class="view-all-btn" aria-expanded="false" aria-controls="plumb-expandable" data-show-text={t['services.view_all_plumb']} data-hide-text={t['services.hide_plumb']}>
+          <span class="btn-text">{t['services.view_all_plumb']}</span>
+          <Icon name="chevron" size={20} className="expand-icon" />
+        </button>
+      </div>
+    </div>
+
+    <!-- SERVICES CTA -->
+    <div class="services-cta">
+      <div class="cta-content">
+        <h3 class="cta-title">{t['services.cta_title']}</h3>
+        <p class="cta-desc">{t['services.cta_desc']}</p>
+      </div>
+      <div class="cta-actions">
+        <Button href={BUSINESS_INFO.phoneLink} variant="primary">
+          <Icon name="phone" size={18} />
+          {t['cta.call_now']}
+        </Button>
+        <Button href={getWhatsAppLink()} variant="accent" className="wa-btn-services">
+          <Icon name="whatsapp" size={18} />
+          {t['cta.whatsapp']}
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .services-section {
+    background-color: var(--color-bg-light);
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto var(--spacing-xl);
+  }
+
+  .section-eyebrow {
+    color: var(--color-plumb);
+    font-weight: 700;
+    font-size: var(--font-size-sm);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .section-title {
+    font-size: var(--font-size-2xl);
+    color: var(--color-primary);
+    margin: 0 0 var(--spacing-md);
+  }
+
+  .section-desc {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .service-category {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .category-title {
+    font-size: var(--font-size-xl);
+    margin: 0 0 var(--spacing-lg);
+    text-align: center;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-bottom: var(--spacing-xs);
+  }
+
+  .elec-title {
+    color: var(--color-primary);
+  }
+  .elec-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    right: 20%;
+    height: 3px;
+    background-color: var(--color-elec);
+    border-radius: var(--radius-sm);
+  }
+
+  .plumb-title {
+    color: var(--color-primary);
+  }
+  .plumb-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    right: 20%;
+    height: 3px;
+    background-color: var(--color-plumb);
+    border-radius: var(--radius-sm);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .featured-grid {
+    /* Mobile defaults to 1 col */
+  }
+
+  .standard-grid {
+    /* Standard grid for non-featured items */
+  }
+
+  .expandable-wrapper {
+    display: none;
+    margin-top: var(--spacing-md);
+  }
+  
+  .expandable-wrapper.expanded {
+    display: block;
+    animation: fadeIn var(--transition-normal) ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .view-all-container {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--spacing-md);
+  }
+
+  .view-all-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background: none;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-xl);
+    font-weight: 600;
+    font-size: var(--font-size-base);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .view-all-btn:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  .view-all-btn .expand-icon {
+    transition: transform var(--transition-normal);
+  }
+
+  .view-all-btn[aria-expanded="true"] .expand-icon {
+    transform: rotate(180deg);
+  }
+
+  .category-divider {
+    border: 0;
+    height: 1px;
+    background-color: #e5e7eb;
+    margin: var(--spacing-xl) 0;
+  }
+
+  .services-cta {
+    background-color: var(--color-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-2xl);
+    color: var(--color-white);
+  }
+
+  .cta-title {
+    font-size: var(--font-size-xl);
+    margin: 0 0 var(--spacing-sm);
+    color: var(--color-white);
+  }
+
+  .cta-desc {
+    margin: 0;
+    font-size: var(--font-size-base);
+    opacity: 0.9;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wa-btn-services {
+    background-color: #25D366;
+    color: var(--color-white);
+  }
+
+  .wa-btn-services:hover {
+    opacity: 0.9;
+  }
+
+  @media (min-width: 640px) {
+    .featured-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .standard-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .services-cta {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      text-align: left;
+    }
+    .cta-actions {
+      flex-direction: row;
+      flex-shrink: 0;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .featured-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .standard-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
+
+<script>
+  function initExpandableServices() {
+    const btns = document.querySelectorAll('.view-all-btn');
+    
+    btns.forEach(btn => {
+      // Remove any existing listeners if this runs multiple times
+      const newBtn = btn.cloneNode(true) as HTMLButtonElement;
+      btn.parentNode?.replaceChild(newBtn, btn);
+      
+      newBtn.addEventListener('click', () => {
+        const targetId = newBtn.getAttribute('aria-controls');
+        if (!targetId) return;
+        
+        const targetElement = document.getElementById(targetId);
+        const textElement = newBtn.querySelector('.btn-text');
+        
+        if (targetElement && textElement) {
+          const isExpanded = newBtn.getAttribute('aria-expanded') === 'true';
+          
+          if (isExpanded) {
+            targetElement.classList.remove('expanded');
+            newBtn.setAttribute('aria-expanded', 'false');
+            textElement.textContent = newBtn.getAttribute('data-show-text');
+          } else {
+            targetElement.classList.add('expanded');
+            newBtn.setAttribute('aria-expanded', 'true');
+            textElement.textContent = newBtn.getAttribute('data-hide-text');
+          }
+        }
+      });
+    });
+  }
+
+  // Initialize on load and Astro page transitions
+  initExpandableServices();
+  document.addEventListener('astro:page-load', initExpandableServices);
+</script>

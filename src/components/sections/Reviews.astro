@@ -1,0 +1,106 @@
+---
+import Icon from '../common/Icon.astro';
+import Button from '../common/Button.astro';
+import { BUSINESS_INFO, getWhatsAppLink } from '../../utils/constants';
+
+interface Props {
+  t: Record<string, string>;
+}
+
+const { t } = Astro.props;
+---
+
+<section id="reviews" class="reviews-section">
+  <div class="container">
+    <div class="section-header text-center">
+      <span class="eyebrow">{t['reviews.eyebrow']}</span>
+      <h2 class="heading-2">{t['reviews.title']}</h2>
+      <p class="section-desc">{t['reviews.desc']}</p>
+    </div>
+
+    <div class="feedback-placeholder">
+      <div class="placeholder-icon">
+        <Icon name="shield" size={48} />
+      </div>
+      <h3 class="heading-3">{t['reviews.empty_msg']}</h3>
+      <p>{t['reviews.cta']}</p>
+      
+      <div class="cta-actions">
+        <Button href={BUSINESS_INFO.phoneLink} variant="outline">
+          <Icon name="phone" size={20} />
+          {t['cta.call_now']}
+        </Button>
+        <Button href={getWhatsAppLink()} variant="outline">
+          <Icon name="whatsapp" size={20} />
+          {t['cta.whatsapp']}
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .reviews-section {
+    padding: var(--spacing-xxl) 0;
+    background-color: var(--color-background-alt);
+  }
+  
+  .section-header {
+    margin-bottom: var(--spacing-xl);
+    max-width: 800px;
+    margin-inline: auto;
+  }
+  
+  .section-desc {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-light);
+    margin-top: var(--spacing-sm);
+  }
+  
+  .feedback-placeholder {
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: var(--color-white);
+    padding: var(--spacing-xxl) var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border: 1px dashed rgba(11, 31, 58, 0.2);
+  }
+  
+  .placeholder-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    background-color: var(--color-background-alt);
+    color: var(--color-text-light);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--spacing-lg);
+    opacity: 0.7;
+  }
+  
+  .feedback-placeholder h3 {
+    color: var(--color-text-main);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .feedback-placeholder p {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .cta-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    justify-content: center;
+  }
+  
+  @media (min-width: 640px) {
+    .cta-actions {
+      flex-direction: row;
+    }
+  }
+</style>

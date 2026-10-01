@@ -1,0 +1,304 @@
+---
+import Icon from '../common/Icon.astro';
+import Button from '../common/Button.astro';
+import { BUSINESS_INFO, getWhatsAppLink } from '../../utils/constants';
+
+interface Props {
+  t: Record<string, string>;
+}
+
+const { t } = Astro.props;
+
+const elecEmergencies = [
+  { id: 'srv.elec.short_circuit', icon: 'tools' },
+  { id: 'srv.elec.fault_finding', icon: 'light' }, // Using 'light' as a generic for fault finding
+  { id: 'srv.elec.repairs', icon: 'tools' },
+  { id: 'srv.elec.mcb_inst', icon: 'shield' }
+];
+
+const plumbEmergencies = [
+  { id: 'srv.plumb.water_leak', icon: 'pipe' },
+  { id: 'srv.plumb.pipe_leak', icon: 'pipe' },
+  { id: 'srv.plumb.drainage', icon: 'pipe' },
+  { id: 'srv.plumb.tap_repair', icon: 'tap' }
+];
+---
+
+<section id="emergency" class="emergency-section">
+  <div class="container">
+    <div class="emergency-panel">
+      <!-- LEFT CONTENT -->
+      <div class="emergency-content">
+        <div class="emergency-badge">
+          <Icon name="clock" size={16} />
+          <span>{t['emergency.eyebrow']}</span>
+        </div>
+        
+        <h2 class="emergency-title">{t['emergency.title']}</h2>
+        <p class="emergency-desc">{t['emergency.desc']}</p>
+
+        <div class="emergency-ctas">
+          <Button href={BUSINESS_INFO.phoneLink} variant="primary" className="emergency-call-btn">
+            <Icon name="phone" size={20} />
+            {t['cta.call_now']}
+          </Button>
+          <Button href={getWhatsAppLink()} variant="accent" className="emergency-wa-btn">
+            <Icon name="whatsapp" size={20} />
+            {t['cta.whatsapp']}
+          </Button>
+        </div>
+        <p class="cta-microcopy">{t['emergency.cta_desc']}</p>
+      </div>
+
+      <!-- RIGHT VISUAL / EXAMPLES -->
+      <div class="emergency-examples">
+        <div class="example-column">
+          <h3 class="example-title elec-title">
+            <Icon name="tools" size={18} />
+            {t['emergency.elec_title']}
+          </h3>
+          <ul class="example-list">
+            {elecEmergencies.map(srv => (
+              <li class="example-item">
+                <span class="item-icon"><Icon name={srv.icon as any} size={16} /></span>
+                <span class="item-text">{t[srv.id]}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="example-column">
+          <h3 class="example-title plumb-title">
+            <Icon name="tap" size={18} />
+            {t['emergency.plumb_title']}
+          </h3>
+          <ul class="example-list">
+            {plumbEmergencies.map(srv => (
+              <li class="example-item">
+                <span class="item-icon"><Icon name={srv.icon as any} size={16} /></span>
+                <span class="item-text">{t[srv.id]}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .emergency-section {
+    padding: var(--spacing-2xl) 0;
+    background-color: var(--color-white);
+  }
+
+  .emergency-panel {
+    background-color: var(--color-primary);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    position: relative;
+    overflow: hidden;
+    color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Optional decorative background elements to make it look premium */
+  .emergency-panel::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(220, 38, 38, 0.15) 0%, rgba(11, 31, 58, 0) 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .emergency-content, .emergency-examples {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* LEFT SIDE */
+  .emergency-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .emergency-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background-color: rgba(220, 38, 38, 0.15);
+    color: #FF8A8A; /* A lighter red for better contrast on navy */
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--spacing-md);
+    border: 1px solid rgba(220, 38, 38, 0.3);
+  }
+
+  .emergency-title {
+    font-size: var(--font-size-2xl);
+    color: var(--color-white);
+    margin: 0 0 var(--spacing-sm);
+    line-height: 1.2;
+  }
+
+  .emergency-desc {
+    font-size: var(--font-size-lg);
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 var(--spacing-lg);
+    max-width: 500px;
+  }
+
+  .emergency-ctas {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    width: 100%;
+  }
+
+  .emergency-call-btn {
+    background-color: var(--color-emergency); /* #DC2626 */
+    color: var(--color-white);
+    border-color: var(--color-emergency);
+  }
+
+  .emergency-call-btn:hover {
+    background-color: #B91C1C; /* Darker red */
+    border-color: #B91C1C;
+    transform: translateY(-2px);
+  }
+
+  .emergency-call-btn:focus-visible {
+    outline: 3px solid rgba(220, 38, 38, 0.5);
+    outline-offset: 2px;
+  }
+
+  .emergency-wa-btn {
+    background-color: #25D366;
+    color: var(--color-white);
+  }
+
+  .emergency-wa-btn:hover {
+    background-color: #128C7E;
+    transform: translateY(-2px);
+  }
+
+  .emergency-wa-btn:focus-visible {
+    outline: 3px solid rgba(37, 211, 102, 0.5);
+    outline-offset: 2px;
+  }
+
+  .cta-microcopy {
+    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.7);
+    margin: var(--spacing-sm) 0 0;
+  }
+
+  /* RIGHT SIDE / EXAMPLES */
+  .emergency-examples {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .example-title {
+    font-size: var(--font-size-base);
+    color: var(--color-white);
+    margin: 0 0 var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+  }
+
+  .elec-title {
+    color: var(--color-elec);
+  }
+
+  .plumb-title {
+    color: #38bdf8; /* Lighter blue for dark background */
+  }
+
+  .example-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .example-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    transition: background-color var(--transition-fast);
+  }
+
+  .example-item:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .item-icon {
+    display: inline-flex;
+    opacity: 0.8;
+  }
+
+  .item-text {
+    flex: 1;
+    line-height: 1.4;
+  }
+
+  /* RESPONSIVE */
+  @media (min-width: 480px) {
+    .emergency-ctas {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .emergency-examples {
+      flex-direction: row;
+    }
+    .example-column {
+      flex: 1;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .emergency-panel {
+      flex-direction: row;
+      align-items: center;
+      padding: var(--spacing-2xl);
+    }
+
+    .emergency-content {
+      flex: 1;
+      padding-right: var(--spacing-xl);
+    }
+
+    .emergency-examples {
+      flex: 1;
+      margin: 0;
+    }
+  }
+</style>

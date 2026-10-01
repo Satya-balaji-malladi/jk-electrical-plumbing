@@ -1,0 +1,189 @@
+---
+import Button from '../common/Button.astro';
+import Icon from '../common/Icon.astro';
+import { BUSINESS_INFO, getWhatsAppLink } from '../../utils/constants';
+
+interface Props {
+  t: Record<string, string>;
+}
+
+const { t } = Astro.props;
+---
+<section class="hero-section">
+  <div class="container hero-container">
+    <div class="hero-content">
+      <p class="hero-eyebrow">{t['hero.eyebrow']}</p>
+      <h1 class="hero-title">{t['hero.title']}</h1>
+      <p class="hero-desc">{t['hero.desc']}</p>
+      
+      <div class="hero-trust-badges">
+        <div class="trust-badge">
+          <Icon name="shield" size={16} className="badge-icon" />
+          <span>{t['trust.exp']}</span>
+        </div>
+        <div class="trust-badge">
+          <Icon name="clock" size={16} className="badge-icon" />
+          <span>{t['trust.emergency']}</span>
+        </div>
+      </div>
+      
+      <div class="hero-actions">
+        <Button href={BUSINESS_INFO.phoneLink} variant="primary" className="hero-btn">
+          <Icon name="phone" size={20} />
+          {t['hero.cta_call']}
+        </Button>
+        <Button href={getWhatsAppLink()} variant="accent" className="hero-btn wa-btn-hero">
+          <Icon name="whatsapp" size={20} />
+          {t['hero.cta_whatsapp']}
+        </Button>
+      </div>
+    </div>
+    
+    <div class="hero-image-wrapper">
+      <img 
+        src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+        alt="Professional electrician working on a residential panel" 
+        class="hero-image"
+        width="800"
+        height="600"
+        loading="eager"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-section {
+    background-color: var(--color-bg-light);
+    padding: var(--spacing-xl) 0;
+    overflow: hidden;
+  }
+  
+  .hero-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+  }
+  
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
+  .hero-eyebrow {
+    color: var(--color-plumb);
+    font-weight: 700;
+    font-size: var(--font-size-sm);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  
+  .hero-title {
+    font-size: var(--font-size-2xl);
+    line-height: 1.1;
+    margin: 0;
+  }
+  
+  .hero-desc {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-muted);
+    max-width: 600px;
+    margin: 0;
+  }
+  
+  .hero-trust-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-sm) 0;
+  }
+  
+  .trust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background-color: var(--color-white);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-xl);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .badge-icon {
+    color: var(--color-elec);
+  }
+  
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-xs);
+  }
+  
+  .hero-btn {
+    width: 100%;
+    justify-content: center;
+    padding: var(--spacing-md);
+  }
+  
+  .wa-btn-hero {
+    background-color: #25D366;
+    color: var(--color-white);
+  }
+  
+  .wa-btn-hero:hover {
+    opacity: 0.9;
+    color: var(--color-white);
+  }
+  
+  .hero-image-wrapper {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+  
+  .hero-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+  }
+  
+  @media (min-width: 768px) {
+    .hero-section {
+      padding: var(--spacing-2xl) 0;
+    }
+    
+    .hero-container {
+      flex-direction: row;
+      align-items: center;
+      gap: var(--spacing-2xl);
+    }
+    
+    .hero-content {
+      flex: 1;
+    }
+    
+    .hero-image-wrapper {
+      flex: 1;
+      max-width: 50%;
+    }
+    
+    .hero-actions {
+      flex-direction: row;
+    }
+    
+    .hero-btn {
+      width: auto;
+      padding: var(--spacing-sm) var(--spacing-lg);
+    }
+    
+    .hero-image {
+      aspect-ratio: 16/10;
+    }
+  }
+</style>

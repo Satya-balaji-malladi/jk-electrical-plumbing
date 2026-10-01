@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# Sitemap will be available at /sitemap.xml once a production domain is configured.

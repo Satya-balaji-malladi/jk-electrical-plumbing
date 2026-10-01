@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/sections/Hero.astro';
+import TrustFacts from '../../components/sections/TrustFacts.astro';
+import Services from '../../components/sections/Services.astro';
+import WhyJK from '../../components/sections/WhyJK.astro';
+import HowItWorks from '../../components/sections/HowItWorks.astro';
+import Emergency from '../../components/sections/Emergency.astro';
+import ServiceArea from '../../components/sections/ServiceArea.astro';
+import Showcase from '../../components/sections/Showcase.astro';
+import Reviews from '../../components/sections/Reviews.astro';
+import FAQ from '../../components/sections/FAQ.astro';
+import ContactCTA from '../../components/sections/ContactCTA.astro';
+import { LANGUAGES } from '../../utils/constants';
+import { getTranslations } from '../../utils/i18n';
+
+export function getStaticPaths() {
+  return LANGUAGES.map(l => ({ params: { lang: l.code } }));
+}
+
+const { lang } = Astro.params;
+const t = getTranslations(lang);
+---
+<BaseLayout lang={lang} t={t} title={t['meta.title']} description={t['meta.desc']}>
+  <Hero t={t} />
+  <TrustFacts t={t} />
+  <Services t={t} />
+  <WhyJK t={t} />
+  <HowItWorks t={t} />
+  <Emergency t={t} />
+  <ServiceArea t={t} />
+  <Showcase t={t} />
+  <Reviews t={t} />
+  <FAQ t={t} />
+  <ContactCTA t={t} />
+</BaseLayout>
+

@@ -1,0 +1,202 @@
+---
+import Logo from '../common/Logo.astro';
+import Icon from '../common/Icon.astro';
+import { BUSINESS_INFO, getWhatsAppLink } from '../../utils/constants';
+
+interface Props {
+  lang: string;
+  t: Record<string, string>;
+}
+
+const { lang, t } = Astro.props;
+---
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo-wrapper">
+          <Logo width={48} height={48} />
+          <span class="footer-brand-name">JK</span>
+        </div>
+        <p class="business-name">{BUSINESS_INFO.name}</p>
+        <p class="footer-desc">{t['footer.desc']}</p>
+      </div>
+      
+      <div class="footer-links">
+        <h4 class="footer-heading">{t['footer.quick_links'] || 'Quick Links'}</h4>
+        <ul role="list">
+          <li><a href={`/${lang}/`}>{t['nav.home']}</a></li>
+          <li><a href={`/${lang}/#services`}>{t['nav.services']}</a></li>
+          <li><a href={`/${lang}/#why-jk`}>{t['nav.why_jk']}</a></li>
+          <li><a href={`/${lang}/#service-area`}>{t['nav.service_area']}</a></li>
+          <li><a href={`/${lang}/#faq`}>{t['nav.faq']}</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-services">
+        <h4 class="footer-heading">{t['footer.services']}</h4>
+        <ul role="list">
+          <li><a href={`/${lang}/#services`}>{t['footer.elec']}</a></li>
+          <li><a href={`/${lang}/#services`}>{t['footer.plumb']}</a></li>
+          <li><a href={`/${lang}/#emergency`} class="text-accent">{t['footer.emerg']}</a></li>
+        </ul>
+      </div>
+      
+      <div class="footer-contact">
+        <h4 class="footer-heading">{t['footer.contact']}</h4>
+        <ul role="list" class="contact-list">
+          <li>
+            <Icon name="phone" size={16} />
+            <a href={BUSINESS_INFO.phoneLink}>{BUSINESS_INFO.phone}</a>
+          </li>
+          <li>
+            <Icon name="whatsapp" size={16} />
+            <a href={getWhatsAppLink()}>{t['cta.whatsapp']}</a>
+          </li>
+          <li class="location-item">
+            <Icon name="location" size={16} />
+            <div>
+              <span>{t['footer.location']}</span>
+              <span class="area-text">{t['footer.area']}</span>
+            </div>
+          </li>
+          <li>
+            <Icon name="clock" size={16} />
+            <span>24/7 {t['footer.emerg']}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="container">
+      <p>{t['footer.rights']}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    margin-top: auto;
+  }
+  
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-xxl) 0 var(--spacing-xl);
+  }
+  
+  @media (min-width: 640px) {
+    .footer-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .footer-grid {
+      grid-template-columns: 2fr 1fr 1fr 1.5fr;
+      gap: var(--spacing-lg);
+    }
+  }
+  
+  .footer-brand-name {
+    font-size: var(--font-size-xl);
+    font-weight: 800;
+    color: var(--color-white);
+    line-height: 1;
+  }
+  
+  .footer-logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .business-name {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-white);
+  }
+  
+  .footer-desc {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+    max-width: 320px;
+  }
+  
+  .footer-heading {
+    font-size: var(--font-size-md);
+    font-weight: 700;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-white);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .footer ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .footer a {
+    color: rgba(255, 255, 255, 0.7);
+    transition: color var(--transition-fast);
+    font-size: var(--font-size-sm);
+  }
+  
+  .footer a:hover {
+    color: var(--color-white);
+  }
+  
+  .text-accent {
+    color: var(--color-accent) !important;
+  }
+  
+  .text-accent:hover {
+    color: var(--color-white) !important;
+  }
+  
+  .contact-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: var(--font-size-sm);
+  }
+  
+  .contact-list .icon {
+    color: var(--color-primary-light);
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  
+  .location-item div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .area-text {
+    font-size: var(--font-size-xs);
+    opacity: 0.8;
+  }
+  
+  .footer-bottom {
+    background-color: rgba(0,0,0,0.2);
+    padding: var(--spacing-md) 0;
+    text-align: center;
+    font-size: var(--font-size-xs);
+    color: rgba(255, 255, 255, 0.6);
+  }
+  
+  .footer-bottom p {
+    margin: 0;
+  }
+</style>
