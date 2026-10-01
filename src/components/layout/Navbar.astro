@@ -13,18 +13,18 @@ const { lang, t } = Astro.props;
 ---
 <header class="navbar">
   <div class="container navbar-container">
-    <a href={`/${lang}/`} class="logo-link" aria-label={t['site.name']}>
+    <a href={`\${import.meta.env.BASE_URL}${lang}/`} class="logo-link" aria-label={t['site.name']}>
       <Logo width={48} height={48} />
       <span class="logo-text">JK</span>
     </a>
 
     <nav class="desktop-nav" aria-label="Main navigation">
       <ul role="list" class="nav-list">
-        <li><a href={`/${lang}/`} class="nav-link">{t['nav.home']}</a></li>
-        <li><a href={`/${lang}/#services`} class="nav-link">{t['nav.services']}</a></li>
-        <li><a href={`/${lang}/#why-jk`} class="nav-link">{t['nav.why_jk']}</a></li>
-        <li><a href={`/${lang}/#service-area`} class="nav-link">{t['nav.service_area']}</a></li>
-        <li><a href={`/${lang}/#faq`} class="nav-link">{t['nav.faq']}</a></li>
+        <li><a href={`\${import.meta.env.BASE_URL}${lang}/`} class="nav-link">{t['nav.home']}</a></li>
+        <li><a href={`\${import.meta.env.BASE_URL}${lang}/#services`} class="nav-link">{t['nav.services']}</a></li>
+        <li><a href={`\${import.meta.env.BASE_URL}${lang}/#why-jk`} class="nav-link">{t['nav.why_jk']}</a></li>
+        <li><a href={`\${import.meta.env.BASE_URL}${lang}/#service-area`} class="nav-link">{t['nav.service_area']}</a></li>
+        <li><a href={`\${import.meta.env.BASE_URL}${lang}/#faq`} class="nav-link">{t['nav.faq']}</a></li>
       </ul>
     </nav>
 
@@ -52,11 +52,11 @@ const { lang, t } = Astro.props;
   <div id="mobile-menu" class="mobile-menu-overlay" aria-hidden="true">
     <nav class="mobile-nav" aria-label="Mobile navigation">
       <ul role="list">
-        <li><a href={`/${lang}/`}>{t['nav.home']}</a></li>
-        <li><a href={`/${lang}/#services`}>{t['nav.services']}</a></li>
-        <li><a href={`/${lang}/#why-jk`}>{t['nav.why_jk']}</a></li>
-        <li><a href={`/${lang}/#service-area`}>{t['nav.service_area']}</a></li>
-        <li><a href={`/${lang}/#faq`}>{t['nav.faq']}</a></li>
+        <li><a href={`\${import.meta.env.BASE_URL}${lang}/`}>{t['nav.home']}</a></li>
+        <li><a href={`\${import.meta.env.BASE_URL}${lang}/#services`}>{t['nav.services']}</a></li>
+        <li><a href={`\${import.meta.env.BASE_URL}${lang}/#why-jk`}>{t['nav.why_jk']}</a></li>
+        <li><a href={`\${import.meta.env.BASE_URL}${lang}/#service-area`}>{t['nav.service_area']}</a></li>
+        <li><a href={`\${import.meta.env.BASE_URL}${lang}/#faq`}>{t['nav.faq']}</a></li>
       </ul>
       
       <div class="mobile-menu-extras">
