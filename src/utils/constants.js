@@ -11,7 +11,7 @@ export const BUSINESS_INFO = {
 };
 
 export const getWhatsAppLink = () => {
-  return `https://wa.me/${BUSINESS_INFO.whatsappNumber}`;
+  return `https://wa.me/${BUSINESS_INFO.whatsappNumber}?text=Hello%2C%20I%20would%20like%20to%20enquire%20about%20your%20electrical%2Fplumbing%20services.%20Please%20let%20me%20know%20the%20availability%20and%20details.%20Thank%20you.`;
 };
 
 export const LANGUAGES = [
